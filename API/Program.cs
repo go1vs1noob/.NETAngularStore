@@ -32,7 +32,9 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseAuthentication();
+// using Cors from ApplicationServicesExtensions
+app.UseCors("CorsPolicy");
+app.UseAuthorization();
 app.MapControllers();
 
 // Creating database from code - each time new migrations will be applied and database created

@@ -16,6 +16,9 @@ namespace Infrastructure.Data
         {
             _storeContext = storeContext;
         }
+
+
+
         public async Task<IReadOnlyList<T>> GetAllAsync(ISpecification<T> specification = null)
         {
 
@@ -31,7 +34,10 @@ namespace Infrastructure.Data
         {
             return await _storeContext.Set<T>().FindAsync(id);
         }
-
+        public async Task<int> CountAsync(ISpecification<T> specification = null)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>().AsQueryable(), specification);
