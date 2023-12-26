@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ProductsService } from '../services/products.service';
-import { ProductType } from '../product-type';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Identifiable } from '../interfaces/identifieable';
 
 @Component({
   selector: 'app-list-group',
@@ -8,8 +7,12 @@ import { ProductType } from '../product-type';
   styleUrls: ['./list-group.component.sass']
 })
 export class ListGroupComponent {
-  @Input() data: ProductType[] | null = null;
-  currentChosenItemId = -1;
-  
+  @Input() data: Identifiable[] = [{ id: 0, name: "All" }];
+  @Output() chosenItemChanged = new EventEmitter<number>();
+  currentChosenItemId = 0;
+  onListGroupItemClick(index: number) {
+    this.currentChosenItemId = index;
+    this.chosenItemChanged.emit(index);
+  }
 
 }

@@ -1,0 +1,5 @@
+<select (change)="onSelectionChange($event)" class="form-select" aria-label="Default select example">
+    <option *ngFor="let item of optionList; let i = index" [selected]="(currentChosenOptionId === i)">
+        {{item.name}} {{item.id}}
+    </option>
+</select>

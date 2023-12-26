@@ -1,2 +1,15 @@
-<p>shop-home works!</p>
-<app-list-group [data]="data"></app-list-group>
+<div class="row mt-5">
+    <div class="col">
+        <app-select (chosenOptionChanged)="onCurrentChosenOptionChange($event)"  [optionList]="sortOptions"></app-select>
+        <div class="h4 mt-4">Types</div>
+        <app-list-group (chosenItemChanged)="onCurrentChosenTypeIdChange($event)"
+            [data]="productTypeData"></app-list-group>
+
+        <div class="h4 mt-4">Brands</div>
+        <app-list-group (chosenItemChanged)="onCurrentChosenBrandIdChange($event)"
+            [data]="productBrandData"></app-list-group>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+</div>

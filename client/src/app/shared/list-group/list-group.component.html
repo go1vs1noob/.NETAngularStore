@@ -3,7 +3,7 @@
 </div>
 <div class="list-group" *ngFor="let item of data; let i = index">
     <button type="button" class="list-group-item list-group-item-action" aria-current="true"
-        (click)="currentChosenItemId = i" [ngClass]="{active: i === currentChosenItemId}">
-        {{item.name}}
+        (click)="onListGroupItemClick(i)" [ngClass]="{active: i === currentChosenItemId}">
+        {{item.name}} {{item.id}}
     </button>
 </div>

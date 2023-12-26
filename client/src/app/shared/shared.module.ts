@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListGroupComponent } from './list-group/list-group.component';
-import { HttpClientModule } from '@angular/common/http';
+import { SelectComponent } from './select/select.component';
 
 
 
 @NgModule({
   declarations: [
-    ListGroupComponent
+    ListGroupComponent,
+    SelectComponent
   ],
   imports: [
     CommonModule,
   ],
-  exports: [ListGroupComponent]
+  exports: [ListGroupComponent, SelectComponent]
 })
 export class SharedModule { }
