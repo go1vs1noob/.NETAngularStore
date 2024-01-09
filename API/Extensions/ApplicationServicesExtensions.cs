@@ -3,7 +3,7 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using StackExchange.Redis;
 namespace API.Extensions
 {
     public static class ApplicationServicesExtensions
@@ -19,8 +19,16 @@ namespace API.Extensions
                 .GetConnectionString("DefaultConnection"));
             });
 
+            // Redis
+            services.AddSingleton<IConnectionMultiplexer>(c =>
+            {
+                var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(options);
+            });
+
             services.AddLogging();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // edit validation behaviour (flatten errors array for consistency)
