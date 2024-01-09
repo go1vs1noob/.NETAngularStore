@@ -1,0 +1,21 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous" (click)="onPreviousPage()"
+                [ngClass]="{disabled: currentPage === 1}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <ng-container *appTimes="getPageAmount(); let i = index">
+            <li class="page-item" *ngIf="pageIsDisplayed(i)" [ngClass]="{active: i + 1 === currentPage}">
+                <a class="page-link" (click)="onChangeCurrentPage(i + 1)">{{i + 1}}</a>
+            </li>
+        </ng-container>
+        <li class="page-item">
+            <a class="page-link" aria-label="Next" (click)="onNextPage()"
+                [ngClass]="{disabled: currentPage === getPageAmount()}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

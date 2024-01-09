@@ -24,7 +24,7 @@ namespace Core.Specifications
             }
             if (specification.OrderByDescending != null)
             {
-                query = query.OrderBy(specification.OrderByDescending);
+                query = query.OrderByDescending(specification.OrderByDescending);
             }
             if (specification.isPagingEnabled)
             {

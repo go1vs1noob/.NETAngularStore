@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { TopNavbarModule } from './top-navbar/top-navbar.module';
 import { ContactModule } from './contact/contact.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     TopNavbarModule,
     ContactModule,
+    BrowserAnimationsModule
 
   ],
   providers: [],

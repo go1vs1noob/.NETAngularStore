@@ -1,6 +1,6 @@
-<div class="row mt-5">
-    <div class="col">
-        <app-select (chosenOptionChanged)="onCurrentChosenOptionChange($event)"  [optionList]="sortOptions"></app-select>
+<div class="row mt-5 row-cols-4">
+    <div class="col-2">
+        <app-select (chosenOptionChanged)="onCurrentChosenOptionChange($event)" [optionList]="sortOptions"></app-select>
         <div class="h4 mt-4">Types</div>
         <app-list-group (chosenItemChanged)="onCurrentChosenTypeIdChange($event)"
             [data]="productTypeData"></app-list-group>
@@ -9,7 +9,20 @@
         <app-list-group (chosenItemChanged)="onCurrentChosenBrandIdChange($event)"
             [data]="productBrandData"></app-list-group>
     </div>
-    <div class="col"></div>
-    <div class="col"></div>
-    <div class="col"></div>
+    <div class="col-1"></div>
+    <div class="col-9">
+        <div class="d-flex flex-row justify-content-between mb-3">
+            <div class="p-2">Showing {{shopQueryParams.pageSize * shopQueryParams.pageNumber -
+                shopQueryParams.pageSize + 1}}-{{shopQueryParams.pageSize * shopQueryParams.pageNumber}} of
+                {{totalProductCount}}
+                results</div>
+            <app-search class="me-4" (searchStringChanged)="onSearchStringChange($event)"></app-search>
+        </div>
+        <app-card-list [data]="transformProductDataToCardInfoData(productData)"></app-card-list>
+        <div class="mb-4 d-flex justify-content-center" *ngIf="totalProductCount>0">
+            <app-pagination (pageChanged)="onPageChanged($event)" [collectionSize]="totalProductCount"
+                [pageSize]="shopQueryParams.pageSize" [currentPage]="shopQueryParams.pageNumber"></app-pagination>
+        </div>
+    </div>
+
 </div>
