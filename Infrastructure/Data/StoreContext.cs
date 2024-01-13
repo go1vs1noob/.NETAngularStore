@@ -7,7 +7,7 @@ namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
-        public StoreContext(DbContextOptions options, ILogger<StoreContext> logger) : base(options)
+        public StoreContext(DbContextOptions<StoreContext> options, ILogger<StoreContext> logger) : base(options)
         {
             _logger = logger;
         }
