@@ -45,4 +45,9 @@ export class ProductsService {
       map(p => p)
     );
   }
+  getProductById(id: string) {
+    return this.httpClient.get<Product>(this.rootUrl + `Products/${id}`).pipe(
+      map(p => p)
+    );
+  }
 }

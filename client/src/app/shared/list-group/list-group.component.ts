@@ -7,7 +7,7 @@ import { Identifiable } from '../interfaces/identifieable';
   styleUrls: ['./list-group.component.sass']
 })
 export class ListGroupComponent {
-  @Input() data: Identifiable[] = [{ id: 0, name: "All" }];
+  @Input() data: Identifiable[] = [{ id: '0', name: "All" }];
   @Output() chosenItemChanged = new EventEmitter<number>();
   currentChosenItemId = 0;
   onListGroupItemClick(index: number) {

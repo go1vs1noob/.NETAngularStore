@@ -18,7 +18,21 @@
                 results</div>
             <app-search class="me-4" (searchStringChanged)="onSearchStringChange($event)"></app-search>
         </div>
-        <app-card-list [data]="transformProductDataToCardInfoData(productData)"></app-card-list>
+
+        <div class="row">
+            <div class="col-4 mb-4 " *ngFor="let item of transformProductDataToCardInfoData(productData); let i = index;">
+                <app-card 
+                    [buttonLeftText]="item.buttonLeftText" 
+                    [buttonRightText]="item.buttonRightText" 
+                    [cardInfo]="item"
+                    (onLeftBtnClick)="onAddToBasketClick($event)"
+                    (onRightBtnClick)="onShowProductClick($event)"
+                    >
+                </app-card>
+            </div>
+        </div>
+
+
         <div class="mb-4 d-flex justify-content-center" *ngIf="totalProductCount>0">
             <app-pagination (pageChanged)="onPageChanged($event)" [collectionSize]="totalProductCount"
                 [pageSize]="shopQueryParams.pageSize" [currentPage]="shopQueryParams.pageNumber"></app-pagination>

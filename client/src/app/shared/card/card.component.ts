@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CardInfo } from 'src/app/shop/models/card-info';
 
 @Component({
   selector: 'app-card',
@@ -6,10 +7,18 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./card.component.sass']
 })
 export class CardComponent {
-  @Input() buttonLeftText = "";
-  @Input() buttonRightText = "";
-  @Input() cardText = "";
-  @Input() cardTitle = "";
-  @Input() cardImageSrc = "";
+  @Input() cardInfo: CardInfo | null = null;
+  @Input() buttonRightText: string = "";
+  @Input() buttonLeftText: string = "";
+  
+  @Output() onLeftBtnClick: EventEmitter<any> = new EventEmitter();
+  @Output() onRightBtnClick: EventEmitter<any> = new EventEmitter();
+
+  leftBtnClicked() {
+    this.onLeftBtnClick.emit(this.cardInfo?.item);
+  }
+  rightBtnClicked() {
+    this.onRightBtnClick.emit(this.cardInfo?.item);
+  }
 
 }

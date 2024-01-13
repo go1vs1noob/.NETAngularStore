@@ -1,3 +1,4 @@
+import { BasketService } from './../../basket/basket.service';
 import { Component } from '@angular/core';
 import { Identifiable } from 'src/app/shared/interfaces/identifieable';
 import { ProductsService } from 'src/app/shop/services/products.service';
@@ -15,8 +16,8 @@ export class ShopHomeComponent {
 
 
 
-  productTypeData: Identifiable[] = [{ id: 0, name: "All" }];
-  productBrandData: Identifiable[] = [{ id: 0, name: "All" }];
+  productTypeData: Identifiable[] = [{ id: '0', name: "All" }];
+  productBrandData: Identifiable[] = [{ id: '0', name: "All" }];
   productData: Product[] = [];
   shopQueryParams = new ShopQueryParams();
   sortOptions = SortOptions.OptionList;
@@ -24,7 +25,7 @@ export class ShopHomeComponent {
 
 
   /* INIT */
-  constructor(private productService: ProductsService) {
+  constructor(private readonly productService: ProductsService, private readonly basketService: BasketService) {
   }
   ngOnInit(): void {
     this.retrieveProductTypes();
@@ -67,7 +68,7 @@ export class ShopHomeComponent {
   retrieveProductTypes() {
     this.productService.getProductTypes().subscribe({
       next: value => {
-        this.productTypeData = [{ id: 0, name: "All" }].concat(value);
+        this.productTypeData = [{ id: '0', name: "All" }].concat(value);
       },
       error: err => { console.error('Error retrieving product types: ' + err) }
     });
@@ -75,7 +76,7 @@ export class ShopHomeComponent {
   retrieveProductBrands() {
     this.productService.getProductBrands().subscribe({
       next: value => {
-        this.productBrandData = [{ id: 0, name: "All" }].concat(value);
+        this.productBrandData = [{ id: '0', name: "All" }].concat(value);
       },
       error: err => { console.error('Error retrieving product types: ' + err) }
     });
@@ -95,12 +96,22 @@ export class ShopHomeComponent {
   transformProductDataToCardInfoData(productData: Product[]) {
     let cardData: CardInfo[] = [];
     cardData = productData.map(item => ({
+      item: item,
       buttonLeftText: 'Buy',
       buttonRightText: 'View',
-      cardImageSrc: item.pictureUrl,
+      cardImgSrc: item.pictureUrl,
       cardText: item.description,
-      cardTitle: item.name
+      cardTitle: item.name,
+      buttonLeftRouterLink: `./`,
+      buttonRightRouterLink: `./${item.id}`
     }));
     return cardData;
+  }
+  onAddToBasketClick(item: Product) {
+    this.basketService.addProductToBasket(item);
+  }
+  onShowProductClick(item: Product) {
+    console.log("Show " + item.id);
+
   }
 }

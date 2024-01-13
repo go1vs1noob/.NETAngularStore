@@ -1,13 +1,15 @@
 <div class="card h-100" style="width: 18rem;">
-    <img [src]="cardImageSrc" class="card-img-top" alt="Image">
+    <img [src]="cardInfo?.cardImgSrc" class="card-img-top" alt="Image">
     <div class="card-body">
-        <h5 class="card-title text-truncate">{{cardTitle}}</h5>
-        <p class="card-text text-truncate">{{cardText}}</p>
+        <h5 class="card-title text-truncate">{{cardInfo?.cardTitle}}</h5>
+        <p class="card-text text-truncate">{{cardInfo?.cardText}}</p>
     </div>
     <div class="card-footer">
         <div class="btn-group w-100" role="group">
-            <button class="btn btn-outline-dark mx-1">{{buttonLeftText}}</button>
-            <button class="btn btn-outline-secondary">{{buttonRightText}}</button>
+            <button [routerLink]="cardInfo?.buttonLeftRouterLink" (click)="leftBtnClicked()"
+                class="btn btn-outline-dark mx-1">{{buttonLeftText}}</button>
+            <button [routerLink]="cardInfo?.buttonRightRouterLink" (click)="rightBtnClicked()"
+                class="btn btn-outline-secondary">{{buttonRightText}}</button>
         </div>
     </div>
 </div>

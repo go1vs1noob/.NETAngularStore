@@ -7,20 +7,23 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
 import { TimesDirective } from '../directives/times.directive';
+import { OrderTotalsComponent } from './order-totals/order-totals.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     ListGroupComponent,
     SelectComponent,
     CardComponent,
     PaginationComponent,
-
+    OrderTotalsComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     PaginationModule.forRoot(),
-    TimesDirective
+    TimesDirective,
+    RouterModule
   ],
-  exports: [ListGroupComponent, SelectComponent, CardComponent, PaginationComponent, PaginationModule]
+  exports: [ListGroupComponent, SelectComponent, CardComponent, PaginationComponent, PaginationModule, OrderTotalsComponent]
 })
 export class SharedModule { }
