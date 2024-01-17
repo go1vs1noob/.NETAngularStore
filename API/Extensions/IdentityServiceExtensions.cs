@@ -33,7 +33,8 @@ namespace API.Extensions
                         ValidateIssuerSigningKey = true, // make sure it's signed by our server
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"])), // which key to check against (the same from TokenService)
                         ValidIssuer = configuration["Token:Issuer"], // make sure issuer is our server
-                        ValidateIssuer = true
+                        ValidateIssuer = true,
+                        ValidateAudience = false
                     };
                 });
             services.AddAuthorization();
