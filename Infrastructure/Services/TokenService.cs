@@ -6,6 +6,7 @@ using Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.AspNetCore.Identity;
 namespace Infrastructure.Services
 {
     public class TokenService : ITokenService
@@ -22,8 +23,9 @@ namespace Infrastructure.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.DisplayName)
+                // default claim chemas don't work ???
+                new Claim("email", user.Email),
+                new Claim("given_name", user.DisplayName)
             };
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             // placeholder for token info stuff
