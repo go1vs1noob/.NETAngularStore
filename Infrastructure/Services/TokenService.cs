@@ -24,8 +24,8 @@ namespace Infrastructure.Services
             var claims = new List<Claim>
             {
                 // default claim chemas don't work ???
-                new Claim("email", user.Email),
-                new Claim("given_name", user.DisplayName)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.GivenName, user.DisplayName)
             };
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             // placeholder for token info stuff
