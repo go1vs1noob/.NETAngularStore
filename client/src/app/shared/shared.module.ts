@@ -5,10 +5,11 @@ import { SelectComponent } from './select/select.component';
 import { CardComponent } from './card/card.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimesDirective } from '../directives/times.directive';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { RouterModule } from '@angular/router';
+import { InputComponent } from './input/input.component';
 @NgModule({
   declarations: [
     ListGroupComponent,
@@ -16,14 +17,16 @@ import { RouterModule } from '@angular/router';
     CardComponent,
     PaginationComponent,
     OrderTotalsComponent,
+    InputComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     PaginationModule.forRoot(),
     TimesDirective,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
-  exports: [ListGroupComponent, SelectComponent, CardComponent, PaginationComponent, PaginationModule, OrderTotalsComponent]
+  exports: [ListGroupComponent, SelectComponent, CardComponent, PaginationComponent, PaginationModule, OrderTotalsComponent, ReactiveFormsModule, InputComponent]
 })
 export class SharedModule { }

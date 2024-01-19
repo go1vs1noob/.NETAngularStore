@@ -1,0 +1,5 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="ui form">
+    <app-input [control]="email" inputType="email" label="Email"></app-input>
+    <app-input [control]="password" inputType="password" label="Password"></app-input>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>

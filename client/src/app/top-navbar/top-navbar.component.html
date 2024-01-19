@@ -25,7 +25,39 @@
 
                         )</a>
                 </li>
+                <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+                    <li class="nav-item">
 
+                        <a routerLinkActive="active" class="nav-link" [routerLink]="['./account/login']">Login
+
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a routerLinkActive="active" class="nav-link" [routerLink]="['./account/register']">Register
+
+                        </a>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="accountService.currentUser$ | async as user">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Welcome {{user.displayName}}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a [routerLink]="['./basket']" class="dropdown-item">Basket</a></li>
+                            <li><a [routerLink]="['./orders']" class="dropdown-item">Orders</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a (click)="logOut()" class="dropdown-item">Log out</a></li>
+                        </ul>
+                    </li>
+
+
+                </ng-container>
             </ul>
         </div>
     </div>

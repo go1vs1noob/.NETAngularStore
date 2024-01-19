@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BasketService } from '../basket/basket.service';
+import { AccountService } from '../account/account.service';
 
 @Component({
   selector: 'app-top-navbar',
@@ -7,10 +8,12 @@ import { BasketService } from '../basket/basket.service';
   styleUrls: ['./top-navbar.component.sass']
 })
 export class TopNavbarComponent {
-  constructor(public readonly basketService: BasketService) {
+
+  constructor(public readonly basketService: BasketService, public readonly accountService: AccountService) {
 
   }
-  foo(){
-    this.basketService.basketSource$
+  logOut() {
+    this.accountService.logout();
   }
+
 }
