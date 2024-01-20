@@ -31,6 +31,37 @@ namespace API.Controllers
             }
             return Ok(order);
         }
-
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDTO>>> GetOrders()
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            IReadOnlyList<Order> orders = await _orderService.GetOrdersForUserAsync(email);
+            if (orders == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+            return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDTO>>(orders));
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrderToReturnDTO>> GetOrderById(int id)
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            Order order = await _orderService.GetOrderByIdAsync(id, email);
+            if (order == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+            return Ok(_mapper.Map<OrderToReturnDTO>(order));
+        }
+        [HttpGet("deliveryMethods")]
+        public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
+        {
+            IReadOnlyList<DeliveryMethod> deliveryMethods = await _orderService.GetDeliveryMethodsAsync();
+            if (deliveryMethods == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+            return Ok(deliveryMethods);
+        }
     }
 }
