@@ -17,7 +17,7 @@ namespace API.Extensions
                 opt.UseSqlite(config
                 .GetConnectionString("DefaultConnection"));
             });
-        
+
             // Redis
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
@@ -28,6 +28,7 @@ namespace API.Extensions
             services.AddLogging();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
