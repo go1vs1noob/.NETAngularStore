@@ -1,6 +1,7 @@
 
 using System.Text.Json;
 using Core.Entities;
+using Core.Entities.Order;
 
 namespace Infrastructure.Data
 {
@@ -25,6 +26,12 @@ namespace Infrastructure.Data
                 var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                 storeContext.Products.AddRange(products);
+            }
+            if (!storeContext.DeliveryMethods.Any())
+            {
+                var deliveryData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+                storeContext.DeliveryMethods.AddRange(deliveryMethods);
             }
             if (storeContext.ChangeTracker.HasChanges())
             {

@@ -14,10 +14,11 @@ namespace Infrastructure.Data.Config
                 a.WithOwner();
 
             });
+            builder.Navigation(a => a.ShipToAddress).IsRequired();
             // Get enum to a string
             builder.Property(s => s.Status).HasConversion(
                 o => o.ToString(),
-                o => (OrderStatus) Enum.Parse(typeof(OrderStatus), o)
+                o => (OrderStatus)Enum.Parse(typeof(OrderStatus), o)
             );
             // If we delete Order - we also delete OrderItems that are part of this order
             builder.HasMany(o => o.OrderItems).WithOne().OnDelete(DeleteBehavior.Cascade);
