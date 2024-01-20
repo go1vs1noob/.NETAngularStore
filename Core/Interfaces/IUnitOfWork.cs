@@ -6,9 +6,6 @@ namespace Core.Interfaces
     {
         IGenericRepository<T> Repository<T>() where T : Entity;
         Task<int> Complete();
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        new void Dispose();
     }
 }

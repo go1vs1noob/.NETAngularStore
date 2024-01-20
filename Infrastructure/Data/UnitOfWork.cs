@@ -12,7 +12,6 @@ namespace Infrastructure.Data
         {
             _storeContext = storeContext;
         }
-
         public async Task<int> Complete()
         {
             return await _storeContext.SaveChangesAsync();

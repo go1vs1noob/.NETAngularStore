@@ -2,22 +2,18 @@
 using Core.Entities;
 using Core.Entities.Order;
 using Core.Interfaces;
+using Core.Specifications;
 
 namespace Infrastructure.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IGenericRepository<Order> _orderRepo;
-        private readonly IGenericRepository<DeliveryMethod> _deliveryRepo;
-        private readonly IGenericRepository<Product> _productRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IBasketRepository _basketRepo;
-        public OrderService(IGenericRepository<Order> orderRepo, IGenericRepository<DeliveryMethod> deliveryRepo,
-        IGenericRepository<Product> productRepo, IBasketRepository basketRepo)
+        public OrderService(IUnitOfWork unitOfWork, IBasketRepository basketRepo)
         {
-            _deliveryRepo = deliveryRepo;
-            _productRepo = productRepo;
             _basketRepo = basketRepo;
-            _orderRepo = orderRepo;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, string basketId, Address shippingAddress)
@@ -32,7 +28,7 @@ namespace Infrastructure.Services
             List<OrderItem> orderItems = new();
             foreach (var basketItem in basket.Items)
             {
-                Product product = await _productRepo.GetAsync(basketItem.Id);
+                Product product = await _unitOfWork.Repository<Product>().GetAsync(basketItem.Id);
                 OrderItem orderItem = new OrderItem
                 {
                     ItemOrdered = new ProductItemOrdered
@@ -47,7 +43,7 @@ namespace Infrastructure.Services
                 orderItems.Add(orderItem);
             }
             // get delivery method from repo
-            DeliveryMethod deliveryMethod = await _deliveryRepo.GetAsync(deliveryMethodId);
+            DeliveryMethod deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetAsync(deliveryMethodId);
             // calculate subtotal
             decimal subtotal = orderItems.Aggregate(0.0m, (total, next) => total + next.Price * next.Quantity);
             // create order
@@ -59,28 +55,33 @@ namespace Infrastructure.Services
                 Subtotal = subtotal,
                 OrderItems = orderItems
             };
-            
-            // TODO: SAVE TO DB
+            _unitOfWork.Repository<Order>().Add(order);
+            // save changes to db
+            int amountOfChanges = await _unitOfWork.Complete();
+            if (amountOfChanges <= 0)
+            {
+                return null;
+            }
+            bool basketWasRemoved = await _basketRepo.DeleteBasketAsync(basketId);
 
             return order;
         }
 
-
-
-
-        public Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync()
+        public async Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.Repository<DeliveryMethod>().GetAllAsync();
         }
 
-        public Task<Order> GetOrderByIdAsync(int orderId, string buyerEmail)
+        public async Task<Order> GetOrderByIdAsync(int orderId, string buyerEmail)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.Repository<Order>()
+                .GetAsync(new OrdersWithItemsAndOrderingSpecification(orderId, buyerEmail));
         }
 
-        public Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
+        public async Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.Repository<Order>()
+                .GetAllAsync(new OrdersWithItemsAndOrderingSpecification(buyerEmail));
         }
     }
 }
