@@ -17,7 +17,7 @@ export class BasketComponent {
   decrementQuantity(id: string) {
     this.basketService.removeItemFromBasket(id);
   }
-  removeItem(item: BasketItem) {
+  removeItem(item: { id: string, quantity: number }) {
     this.basketService.removeItemFromBasket(item.id, item.quantity);
   }
 }

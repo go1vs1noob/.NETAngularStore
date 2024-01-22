@@ -10,6 +10,9 @@ import { TimesDirective } from '../directives/times.directive';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { RouterModule } from '@angular/router';
 import { InputComponent } from './input/input.component';
+import { StepperComponent } from './stepper/stepper.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import BasketSummaryComponent from './basket-summary/basket-summary.component';
 @NgModule({
   declarations: [
     ListGroupComponent,
@@ -18,6 +21,8 @@ import { InputComponent } from './input/input.component';
     PaginationComponent,
     OrderTotalsComponent,
     InputComponent,
+    StepperComponent,
+    BasketSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -25,8 +30,21 @@ import { InputComponent } from './input/input.component';
     PaginationModule.forRoot(),
     TimesDirective,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdkStepperModule
   ],
-  exports: [ListGroupComponent, SelectComponent, CardComponent, PaginationComponent, PaginationModule, OrderTotalsComponent, ReactiveFormsModule, InputComponent]
+  exports: [
+    ListGroupComponent,
+    SelectComponent,
+    CardComponent,
+    PaginationComponent,
+    PaginationModule,
+    OrderTotalsComponent,
+    ReactiveFormsModule,
+    InputComponent,
+    StepperComponent,
+    CdkStepperModule,
+    BasketSummaryComponent
+  ]
 })
 export class SharedModule { }
