@@ -11,4 +11,5 @@ export interface Order {
     subtotal: number;
     total: number;
     status: string;
+    orderDate: Date;
 }
