@@ -1,0 +1,10 @@
+client
+.dockerignore
+.git
+.gitignore
+Dockerfile
+README.md
+docker-compose.yml
+package-lock.json
+package.json
+**/bin

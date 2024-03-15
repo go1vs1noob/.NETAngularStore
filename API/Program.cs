@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using API.Extensions;
 using API.Middleware;
 using Core.Entities.Identity;
@@ -8,6 +9,23 @@ using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.ConfigureHttpsDefaults(httpsOptions =>
+                        {
+                            // Load the certificate from the .pfx file
+                            var certificate =
+                                new X509Certificate2(Path.Combine(
+                                    Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
+                                    "Certificates", "API.pfx"),
+                                        "pass");
+
+                            // Set the loaded certificate as the server certificate
+                            httpsOptions.ServerCertificate = certificate;
+                        });
+                    });
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 // Add services to the container.
