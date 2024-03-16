@@ -9,28 +9,27 @@ namespace Infrastructure.Data
     {
         public static async Task SeedAsync(StoreContext storeContext)
         {
-            var PathToStaticFiles = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "wwwroot", "SeedData");
             if (!storeContext.ProductBrands.Any())
             {
-                var brandsData = File.ReadAllText(Path.Combine(PathToStaticFiles, "brands.json"));
+                var brandsData = File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
                 var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
                 storeContext.ProductBrands.AddRange(brands);
             }
             if (!storeContext.ProductTypes.Any())
             {
-                var typesData = File.ReadAllText(Path.Combine(PathToStaticFiles, "types.json"));
+                var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
                 var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
                 storeContext.ProductTypes.AddRange(types);
             }
             if (!storeContext.Products.Any())
             {
-                var productsData = File.ReadAllText(Path.Combine(PathToStaticFiles, "products.json"));
+                var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                 storeContext.Products.AddRange(products);
             }
             if (!storeContext.DeliveryMethods.Any())
             {
-                var deliveryData = File.ReadAllText(Path.Combine(PathToStaticFiles, "delivery.json"));
+                var deliveryData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
                 var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
                 storeContext.DeliveryMethods.AddRange(deliveryMethods);
             }

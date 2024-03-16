@@ -1,27 +1,23 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:alpine3.19
-    environment:
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: appuser
+
+  redis:
+    image: redis:latest
     ports:
-      - 5432:5432
+      - 6379:6379
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - postgres-data:/data
-  aspnetcoreapp:
-    build:
-      context: .
-    ports:
-      - "5001:5001"
-    depends_on:
-      - db
+      - redis-data:/data
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
     environment:
-      - DOTNET_URLS=https://+:5001
-      - ConnectionStrings__DefaultConnection=User ID=appuser;Password=secret;Host=db;Port=5432;Database=shop;
-      - ConnectionStrings__IdentityConnection=User ID=appuser;Password=secret;Host=db;Port=5432;Database=identity;
-      - DOTNET_NUGET_SIGNATURE_VERIFICATION=false
-      - ASPNETCORE_ENVIRONMENT=Development
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=root
+      - HTTP_PASSWORD=secret
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis
+    
 volumes:
-  postgres-data:
+  redis-data:

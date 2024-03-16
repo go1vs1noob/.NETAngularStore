@@ -14,7 +14,7 @@ namespace API.Extensions
         {
             services.AddDbContext<StoreContext>(opt =>
             {
-                opt.UseNpgsql(config
+                opt.UseSqlite(config
                 .GetConnectionString("DefaultConnection"));
             });
 
@@ -32,6 +32,7 @@ namespace API.Extensions
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // edit validation behaviour (flatten errors array for consistency)
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -59,7 +60,6 @@ namespace API.Extensions
                 {
                     policy.AllowAnyHeader();
                     // for angular development
-                    //policy.AllowAnyMethod();
                     policy.AllowAnyMethod().WithOrigins("http://localhost:4200");
                 });
             });
